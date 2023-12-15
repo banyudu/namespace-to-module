@@ -1,0 +1,42 @@
+{
+  "name": "namespace-to-module",
+  "version": "0.0.0",
+  "description": "Convert namespace to modules",
+  "main": "dist/index.js",
+  "bin": {
+    "namespace-to-module": "dist/cli.js",
+    "ns2module": "dist/cli.js"
+  },
+  "files": [
+    "package.json",
+    "README.md",
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "mocha --require ts-node/register test/**/*.spec.ts"
+  },
+  "keywords": [
+    "namespace",
+    "convert",
+    "module"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "author": "banyudu <banyudu@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "ts-morph": "^21.0.1",
+    "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.10.4",
+    "@types/yargs": "^17.0.32",
+    "mocha": "^10.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
