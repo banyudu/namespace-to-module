@@ -2,21 +2,14 @@
 
 // get filename from command line with yargs
 
-import fs from 'fs'
 import path from 'path'
 import { Project } from 'ts-morph'
-import yargs from 'yargs'
-import { hideBin } from 'yargs/helpers'
 
-const parse = async () => {
-  const argv = await yargs(hideBin(process.argv)).parse()
-
-  // read first argument as filename
-  const filename: string = argv._[0] as string
-
+const ns2Module = async (filename: string, outDir?: string) => {
   if (!filename) {
     throw new Error('filename is required')
   }
+  const finalOutDir = outDir || path.join(process.cwd(), 'output')
 
   // create project
   const project = new Project()
@@ -29,7 +22,6 @@ const parse = async () => {
   for (const ns of namespaces) {
     // get namespace name
     const nsName = ns.getName()
-    console.log('namespace name: ', nsName)
     if (!nsName) {
       throw new Error('namespace name is required')
     }
@@ -52,17 +44,18 @@ const parse = async () => {
     //   statements.map((s) => s.getText()).join('\n')
     // )
 
+    const nsPaths = nsName.split('.')
+    nsPaths[nsPaths.length - 1] = `${nsPaths[nsPaths.length - 1]}.ts`
+    const outputFileName = path.join(finalOutDir, ...nsPaths)
+
     const newFile = project.createSourceFile(
-      path.join(process.cwd(), 'output', `${nsName.replace('chrome.', '')}.ts`),
+      outputFileName,
       ns.getBodyText()
     )
-
-    // remove namespace
-    // ns.remove()
 
     // save new file
     newFile.saveSync()
   }
 }
 
-parse().catch(console.error)
+export default ns2Module

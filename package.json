@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "test": "mocha --require ts-node/register test/**/*.spec.ts"
+    "test": "npm run build && mocha --require ts-node/register test/**/*.spec.ts"
   },
   "keywords": [
     "namespace",
@@ -36,7 +36,9 @@
     "@types/node": "^20.10.4",
     "@types/yargs": "^17.0.32",
     "mocha": "^10.2.0",
+    "power-assert": "^1.6.1",
     "ts-node": "^10.9.2",
+    "ts-standard": "^12.0.2",
     "typescript": "^5.3.3"
   }
 }
