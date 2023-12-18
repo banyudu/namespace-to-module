@@ -4,12 +4,13 @@
 
 import path from 'path'
 import { Project } from 'ts-morph'
+import { falsy } from './utils'
 
-const ns2Module = async (filename: string, outDir?: string) => {
-  if (!filename) {
+const ns2Module = async (filename: string, outDir?: string): Promise<void> => {
+  if (falsy(filename)) {
     throw new Error('filename is required')
   }
-  const finalOutDir = outDir || path.join(process.cwd(), 'output')
+  const finalOutDir = outDir ?? path.join(process.cwd(), 'output')
 
   // create project
   const project = new Project()
@@ -22,7 +23,7 @@ const ns2Module = async (filename: string, outDir?: string) => {
   for (const ns of namespaces) {
     // get namespace name
     const nsName = ns.getName()
-    if (!nsName) {
+    if (falsy(nsName)) {
       throw new Error('namespace name is required')
     }
 
@@ -35,8 +36,10 @@ const ns2Module = async (filename: string, outDir?: string) => {
     // const funcStatements = ns.getFunctions()
 
     // get namespace statements
-    // const statements = ns.getStatementsWithComments()
-    // console.log('ns is: ', ns.getBodyText())
+    const statements = ns.getStatementsWithComments()
+    for (const stmt of statements) {
+      console.log(stmt.getFullText())
+    }
 
     // create new file
     // const newFile = project.createSourceFile(

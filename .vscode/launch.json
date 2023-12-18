@@ -1,0 +1,39 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+
+    {
+      "args": [
+        "--require",
+        "ts-node/register",
+        "--timeout",
+        "999999",
+        "--colors",
+        "${workspaceFolder}/test/chrome.spec.ts"
+      ],
+      "internalConsoleOptions": "openOnSessionStart",
+      "name": "Mocha Tests",
+      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+      "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    }
+    // {
+    //   "name": "Mocha",
+    //   "type": "node",
+    //   "request": "launch",
+    //   "program": "${workspaceRoot}/node_modules/.bin/mocha",
+    //   "runtimeArgs": [
+    //     // "${workspaceRoot}/node_modules/.bin/mocha",
+    //     "--require",
+    //     "ts-node/register",
+    //     "--inspect-brk",
+    //     "test/chrome.spec.ts"
+    //   ],
+    //   "console": "integratedTerminal",
+    //   "internalConsoleOptions": "neverOpen"
+    // }
+  ]
+}

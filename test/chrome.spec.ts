@@ -1,5 +1,5 @@
 import path from 'path'
-import ns2Module from '..'
+import ns2Module from '../index'
 import assert = require('assert')
 import fs from 'fs'
 
