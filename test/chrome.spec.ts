@@ -88,7 +88,7 @@ describe('Chrome', () => {
   })
 
   before(async () => {
-    await fs.rmSync(outputDir, { recursive: true })
+    await fs.rmSync(outputDir, { recursive: true, force: true })
     await ns2Module(path.join(__dirname, 'data', 'chrome.d.ts'), outputDir)
   })
 
@@ -108,11 +108,13 @@ describe('Chrome', () => {
     }
   })
 
-  it('should not contain `export var`', async () => {
+  it('should not contain `export var/let/const`', async () => {
     // export var
     for (const file of outputFiles) {
       const fileContent = fs.readFileSync(file)
       assert(!fileContent.includes('export var '), `${file} should not contain 'export var '`)
+      assert(!fileContent.includes('export let'), `${file} should not contain 'export let'`)
+      assert(!fileContent.includes('export const'), `${file} should not contain 'export const'`)
     }
   })
 
@@ -126,5 +128,16 @@ describe('Chrome', () => {
     for (const comment of comments) {
       assert(historyFile.includes(comment), `chrome/history.ts should contain comment: ${comment}`)
     }
+  })
+
+  it('should reserve leading comments', async () => {
+    const runtimeLeadingComment = 'Use the chrome.runtime API to retrieve the background page, return details about the manifest'
+    const runtimeFile = fs.readFileSync(path.join(outputDir, 'chrome', 'runtime.ts'))
+    assert(runtimeFile.includes(runtimeLeadingComment), `chrome/runtime.ts should contain leading comment: ${runtimeLeadingComment}`)
+  })
+
+  it('should support sub namespace', async () => {
+    const debuggerFileExists = fs.existsSync(path.join(outputDir, 'chrome', 'debugger.ts'))
+    assert(debuggerFileExists, 'should support sub namespace chrome.debugger')
   })
 })
