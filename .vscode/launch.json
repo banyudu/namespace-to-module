@@ -20,20 +20,5 @@
       ],
       "type": "node"
     }
-    // {
-    //   "name": "Mocha",
-    //   "type": "node",
-    //   "request": "launch",
-    //   "program": "${workspaceRoot}/node_modules/.bin/mocha",
-    //   "runtimeArgs": [
-    //     // "${workspaceRoot}/node_modules/.bin/mocha",
-    //     "--require",
-    //     "ts-node/register",
-    //     "--inspect-brk",
-    //     "test/chrome.spec.ts"
-    //   ],
-    //   "console": "integratedTerminal",
-    //   "internalConsoleOptions": "neverOpen"
-    // }
   ]
 }
