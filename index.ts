@@ -84,8 +84,12 @@ const ns2Module = async (filename: string, outDir?: string): Promise<void> => {
       } else if (stmt.isKind(SyntaxKind.ClassDeclaration)) {
         // remove leading export class
         const classText = stmt.getFullText()
-        // FIXME: process the constructor
-        funcAndVarStatements.push(classText.replace(/export class ([a-zA-Z0-9]+)/, '$1:'))
+        const className = stmt.getName() as string
+        let text = classText.replace(/export class/, 'export interface')
+
+        // replace constructor to new
+        text = text.replace(/constructor \((.*)\)/, `new($1): ${className};`)
+        interfaceContents.push(text)
       } else if (stmt.isKind(SyntaxKind.ModuleDeclaration)) {
         // sub namespace do nothing
       } else {

@@ -140,4 +140,12 @@ describe('Chrome', () => {
     const debuggerFileExists = fs.existsSync(path.join(outputDir, 'chrome', 'debugger.ts'))
     assert(debuggerFileExists, 'should support sub namespace chrome.debugger')
   })
+
+  it('should support classes', async () => {
+    const declarativeContentFile = fs.readFileSync(path.join(outputDir, 'chrome', 'declarativeContent.ts'))
+
+    // classes should be converted to interfaces
+    assert(declarativeContentFile.includes('export interface PageStateMatcher'), 'should support classes')
+    assert(declarativeContentFile.includes('new(options: PageStateMatcherProperties): PageStateMatcher'), 'should support classes')
+  })
 })
